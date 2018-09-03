@@ -15,12 +15,13 @@ basedir=$(dirname "$scriptdir")
 # Clone
 # TODO: clone from branch jez only
 git clone -b jez $basedir $pathname || exit 1
-# Copy node_modules
-echo 'Copying node_modules...'
-cp -R $basedir/node_modules .
 
 # Jump in for some things
 cd $pathname
+
+# Copy node_modules
+echo 'Copying node_modules...'
+cp -R $basedir/node_modules .
 
 # TODO: Rename origin to upstream
 echo 'Updating remote repos'
