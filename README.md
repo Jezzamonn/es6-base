@@ -1,6 +1,8 @@
 # ES6 Base
 Base project for creating interactive things ES6 JavaScript. :)
 
+It creates a full-page canvas, which you draw on with JavaScript. There's a rough framework for handling resizing/animation timing already so that in the Controller.js class you can just implement `update()` and `render(context)` and it should do stuff for you.
+
 ## Getting Started
 `npm install` in the main directory will install dependencies.
 
