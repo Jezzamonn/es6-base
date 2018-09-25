@@ -13,7 +13,6 @@ scriptdir="$( cd "$(dirname "$0")" ; pwd -P )"
 basedir=$(dirname "$scriptdir")
 
 # Clone
-# TODO: clone from branch jez only
 git clone -b jez $basedir $pathname || exit 1
 
 # Jump in for some things
@@ -23,7 +22,10 @@ cd $pathname
 echo 'Copying node_modules...'
 cp -R $basedir/node_modules .
 
-# TODO: Rename origin to upstream
+# Make this branch be called master
+echo 'Renaming branch'
+git branch -m master
+
 echo 'Updating remote repos'
 git remote rm origin
 git remote add upstream $basedir
