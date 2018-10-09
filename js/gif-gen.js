@@ -1,9 +1,11 @@
 import Controller from './controller.js';
 import Canvas from 'canvas';
 import fs from 'fs';
+import GIFEncoder from 'gifencoder';
 
 const width = 500;
 const height = 500;
+const fps = 60;
 
 function renderFrame(context, controller) {
     context.resetTransform();
@@ -20,9 +22,23 @@ const canvas = new Canvas(width, height);
 const context = canvas.getContext('2d');
 const controller = new Controller();
 controller.update(0);
-renderFrame(context, controller);
 
-const out = fs.createWriteStream('build/test.png')
-const stream = canvas.pngStream();
-stream.on('data', chunk => out.write(chunk));
-stream.on('end', () => console.log('saved png?'));
+const encoder = new GIFEncoder(width, height);
+encoder.createReadStream().pipe(fs.createWriteStream('test.gif'))
+encoder.start();
+encoder.setRepeat(0);
+encoder.setDelay(1000 / fps);
+encoder.setQuality(10);
+
+while (true) {
+    renderFrame(context, controller);
+    encoder.addFrame(context);
+
+    const lastAnimAmt = controller.animAmt;
+    controller.update(1 / fps);
+    if (controller.animAmt < lastAnimAmt) {
+        break;
+    }
+}
+
+encoder.finish();
