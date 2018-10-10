@@ -6,7 +6,8 @@ import singleLineLog from 'single-line-log';
 
 const width = 500;
 const height = 500;
-const fps = 60;
+const fps = 30;
+const numSubFrames = 4; // how many frames are used to create the motion blur
 
 function renderFrame(context, controller) {
     context.resetTransform();
@@ -17,6 +18,14 @@ function renderFrame(context, controller) {
     context.translate(canvas.width / 2, canvas.height / 2);
     
     controller.render(context);
+}
+
+function averageImageDatas(imageDatas, outImageData) {
+    for (let i = 0; i < outImageData.data.length; i ++) {
+        let sum = imageDatas.map(imageData => imageData.data[i]).reduce((a, b) => a + b, 0);
+        outImageData.data[i] = sum / imageDatas.length;
+    }
+    return outImageData;
 }
 
 const canvas = new Canvas(width, height);
@@ -31,12 +40,24 @@ encoder.setRepeat(0);
 encoder.setDelay(1000 / fps);
 encoder.setQuality(10);
 
+const subFrameTime = (1 / fps) / numSubFrames;
+
 while (true) {
-    renderFrame(context, controller);
+    const lastAnimAmt = controller.animAmt;
+
+    const subframes = [];
+    for (let i = 0; i < numSubFrames; i ++) {
+        renderFrame(context, controller);
+        subframes.push(context.getImageData(0, 0, width, height));
+
+        controller.update(subFrameTime);
+    }
+
+    const averagedFrame = averageImageDatas(subframes, context.createImageData(width, height));
+    context.putImageData(averagedFrame, 0, 0);
     encoder.addFrame(context);
 
-    const lastAnimAmt = controller.animAmt;
-    controller.update(1 / fps);
+    // we've looped back to the start
     if (controller.animAmt < lastAnimAmt) {
         break;
     }
