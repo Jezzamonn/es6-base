@@ -2,6 +2,7 @@ import Controller from './controller.js';
 import Canvas from 'canvas';
 import fs from 'fs';
 import GIFEncoder from 'gifencoder';
+import singleLineLog from 'single-line-log';
 
 const width = 500;
 const height = 500;
@@ -39,6 +40,9 @@ while (true) {
     if (controller.animAmt < lastAnimAmt) {
         break;
     }
+    singleLineLog.stdout("Generating gif " + controller.animAmt);
 }
 
 encoder.finish();
+
+console.log("Totes doneage");

@@ -29,6 +29,7 @@
     "canvas": "^1.6.12",
     "gif-encoder": "^0.7.1",
     "gif.js.optimized": "^1.0.1",
-    "gifencoder": "^1.1.0"
+    "gifencoder": "^1.1.0",
+    "single-line-log": "^1.1.2"
   }
 }
