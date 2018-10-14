@@ -27,7 +27,8 @@ function averageImageDatas(imageDatas, outImageData) {
     return outImageData;
 }
 
-function generateGif(controller, width, height, fps, numSubFrames, outFileName) {
+function generateGif(controller, options, outFileName) {
+    const {width, height, fps, numSubFrames, length} = options;
     // we wrap this whole thing in a promise so we can deal with the async nature of dealing with the file.
     return new Promise((resolve, reject) => {
         const canvas = new Canvas(width, height);
@@ -41,11 +42,10 @@ function generateGif(controller, width, height, fps, numSubFrames, outFileName) 
         encoder.setDelay(1000 / fps);
         encoder.setQuality(10);
         
-        const subFrameTime = (1 / fps) / numSubFrames;
+        const dt = (1 / fps);
+        const subFrameTime = dt / numSubFrames;
         
-        while (true) {
-            const lastAnimAmt = controller.animAmt;
-        
+        for (let time = 0; time < length; time += dt) {
             const subframes = [];
             for (let i = 0; i < numSubFrames; i ++) {
                 renderFrame(context, controller, width, height);
@@ -58,13 +58,10 @@ function generateGif(controller, width, height, fps, numSubFrames, outFileName) 
             context.putImageData(averagedFrame, 0, 0);
             encoder.addFrame(context);
         
-            // we've looped back to the start
-            if (controller.animAmt < lastAnimAmt) {
-                break;
-            }
+            const doneAmt = time / length;
             singleLineLog.stdout(format(
                 "Generating gif: {}",
-                controller.animAmt.toLocaleString('en', {style: 'percent'})
+                doneAmt.toLocaleString('en', {style: 'percent'})
             ));
         }
         
@@ -103,13 +100,16 @@ function optimiseGif(inFileName, outFileName) {
 }
 
 function main() {
-    const width = 500;
-    const height = 500;
-    const fps = 30;
-    const numSubFrames = 4;
     const controller = new Controller();
+    const options = {
+        width: 500,
+        height: 500,
+        fps: 30,
+        numSubFrames: 4,
+        length: 1,
+    }
 
-    generateGif(controller, width, height, fps, numSubFrames, 'build/gen.gif')
+    generateGif(controller, options, 'build/gen.gif')
         .then(() => optimiseGif('build/gen.gif', 'build/opt.gif'))
         .catch(err => console.log('Something went wrong!\n' + err));
 }
