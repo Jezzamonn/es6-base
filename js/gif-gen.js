@@ -109,8 +109,8 @@ function main() {
     const numSubFrames = 4;
     const controller = new Controller();
 
-    generateGif(controller, width, height, fps, numSubFrames, 'gen.gif')
-        .then(() => optimiseGif('gen.gif', 'opt.gif'))
+    generateGif(controller, width, height, fps, numSubFrames, 'build/gen.gif')
+        .then(() => optimiseGif('build/gen.gif', 'build/opt.gif'))
         .catch(err => console.log('Something went wrong!\n' + err));
 }
 
