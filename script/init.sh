@@ -43,4 +43,4 @@ echo 'Committing changes...'
 git add .
 git commit -m 'Set project name.'
 
-$scriptdir/git.sh $pathname $title
+$scriptdir/git.sh "$pathname" "$title"
