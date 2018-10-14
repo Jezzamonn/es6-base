@@ -22,6 +22,17 @@
     "http-server": "^0.11.1",
     "npm-watch": "^0.3.0",
     "reload": "^2.3.1",
-    "webpack": "^3.11.0"
+    "webpack": "^3.11.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "canvas": "^1.6.12",
+    "filesize": "^3.6.1",
+    "gif-encoder": "^0.7.1",
+    "gif.js.optimized": "^1.0.1",
+    "gifencoder": "^1.1.0",
+    "gifsicle": "^3.0.4",
+    "single-line-log": "^1.1.2",
+    "string-format": "^2.0.0"
   }
 }
