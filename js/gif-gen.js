@@ -105,7 +105,7 @@ function optimiseGif(inFileName, outFileName) {
 function main() {
     const width = 500;
     const height = 500;
-    const fps = 2;
+    const fps = 30;
     const numSubFrames = 4;
     const controller = new Controller();
 
