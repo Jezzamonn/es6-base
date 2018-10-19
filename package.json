@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "watch": {
-    "webpack": "js/*.js"
+    "webpack": "js/*.js",
+    "gif": "build/gif-gen.bundle.js"
   },
   "scripts": {
     "start": "http-server",
     "webpack": "webpack || exit 1",
-    "watch": "npm-watch",
-    "reload": "reload -b -w build"
+    "watch": "npm-watch webpack",
+    "reload": "reload -b -w build",
+    "gif": "node build/gif-gen.bundle.js",
+    "watch-gif": "npm-watch gif"
   },
   "author": "Jezzamon",
   "license": "ISC",
