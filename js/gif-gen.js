@@ -106,7 +106,7 @@ function main() {
         height: 500,
         fps: 30,
         numSubFrames: 4,
-        length: 1,
+        length: controller.period,
     }
 
     generateGif(controller, options, 'build/gen.gif')
