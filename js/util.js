@@ -40,3 +40,23 @@ export function clamp(amt, val1, val2) {
     }
     return amt;
 }
+
+/**
+ * Extracts a 0-1 interval from a section of a 0-1 interval
+ *
+ * For example, if min == 0.3 and max == 0.7, you get:
+ *
+ *           0.3  0.7
+ *     t: 0 --+----+-- 1
+ *           /      \
+ *          /        \
+ *         /          \
+ *     -> 0 ---------- 1
+ *
+ * Useful for making sub animations.
+ *
+ * Doesn't do any clamping, so you might want to clamp yourself.
+ */
+export function divideInterval(t, min, max) {
+    return (t - min) / (max - min);
+}
