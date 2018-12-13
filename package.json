@@ -5,7 +5,8 @@
   "main": "index.js",
   "watch": {
     "webpack": "js/*.js",
-    "gif": "build/gif-gen.bundle.js"
+    "gif": "build/gif-gen.bundle.js",
+    "video": "build/opt.gif"
   },
   "scripts": {
     "start": "http-server",
@@ -13,7 +14,9 @@
     "watch": "npm-watch webpack",
     "reload": "reload -b -w build",
     "gif": "node build/gif-gen.bundle.js",
-    "watch-gif": "npm-watch gif"
+    "watch-gif": "npm-watch gif",
+    "video": "script/video-gen.sh",
+    "watch-video": "npm-watch video"
   },
   "author": "Jezzamon",
   "license": "ISC",
