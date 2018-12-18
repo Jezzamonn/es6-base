@@ -7,6 +7,8 @@ import gifsicle from 'gifsicle';
 import {execFile} from 'child_process'
 import format from 'string-format';
 import filesize from 'filesize';
+import { join } from 'path';
+import mkdirp from 'mkdirp';
 
 function renderFrame(context, controller, width, height) {
     context.resetTransform();
@@ -25,6 +27,51 @@ function averageImageDatas(imageDatas, outImageData) {
         outImageData.data[i] = sum / imageDatas.length;
     }
     return outImageData;
+}
+
+/**
+ * Outputs a bunch of frames as pngs to a directory.
+ */
+function generateFrames(controller, options, outDirectory) {
+    const {width, height, fps, numSubFrames, length} = options;
+    const canvas = new Canvas(width, height);
+    const context = canvas.getContext('2d');
+    controller.update(0);
+    
+    const dt = (1 / fps);
+    const subFrameTime = dt / numSubFrames;
+
+    mkdirp(outDirectory);
+    
+    let frameNumber = 0;
+    for (let time = 0; time < length; time += dt) {
+        const subframes = [];
+        for (let i = 0; i < numSubFrames; i ++) {
+            renderFrame(context, controller, width, height);
+            subframes.push(context.getImageData(0, 0, width, height));
+    
+            controller.update(subFrameTime);
+        }
+    
+        const averagedFrame = averageImageDatas(subframes, context.createImageData(width, height));
+        context.putImageData(averagedFrame, 0, 0);
+
+        const paddedFrame = frameNumber.toString().padStart(4, '0');
+        const fileName = `frame${paddedFrame}.png`;
+        const filePath = join(outDirectory, fileName);
+
+        fs.writeFileSync(filePath, canvas.toBuffer());
+    
+        const doneAmt = time / length;
+        singleLineLog.stdout(format(
+            "Generating frames: {}",
+            doneAmt.toLocaleString('en', {style: 'percent'})
+        ));
+
+        frameNumber ++;
+    }
+    
+    singleLineLog.stdout("Generating Done!\n")
 }
 
 function generateGif(controller, options, outFileName) {
@@ -109,9 +156,10 @@ function main() {
         length: 1,
     }
 
-    generateGif(controller, options, 'build/gen.gif')
-        .then(() => optimiseGif('build/gen.gif', 'build/opt.gif'))
-        .catch(err => console.log('Something went wrong!\n' + err));
+    generateFrames(controller, options, '/tmp/gif');
+    // generateGif(controller, options, 'build/gen.gif')
+    //     .then(() => optimiseGif('build/gen.gif', 'build/opt.gif'))
+    //     .catch(err => console.log('Something went wrong!\n' + err));
 }
 
 main();
