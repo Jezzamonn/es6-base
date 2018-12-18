@@ -1,5 +1,13 @@
+#!/bin/bash
 # Generates a video using ffmpeg.
 # 
-# Requires ffmpeg to be installed, and a gif to already have been made.
 # Will always overwrite any existing file.
-ffmpeg -y -i build/opt.gif -movflags faststart -pix_fmt yuv420p build/vid.mp4
+
+set -ex
+
+frame_pattern="/tmp/gif/frame%004d.png"
+
+# output the frames
+node build/gif-gen.bundle.js
+
+ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y build/vid.mp4

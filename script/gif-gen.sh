@@ -4,6 +4,7 @@ set -ex
 frame_pattern="/tmp/gif/frame%004d.png"
 palette="/tmp/palette.png"
 
+# output the frames
 node build/gif-gen.bundle.js
 
 # Then bunch them together into a gif! (?)
