@@ -2,21 +2,23 @@ export default class Controller {
 
 	constructor() {
 		this.animAmt = 0;
-		this.period = 5;
+		this.period = 3;
 	}
 
-	/**
-	 * @param {Number} dt Time in seconds since last update
-	 */
 	update(dt) {
 		this.animAmt += dt / this.period;
+		this.animAmt %= 1;
 	}
 
-	/**
-	 * @param {CanvasRenderingContext2D} context 
-	 */
 	render(context) {
-		// TODO: Some rendering logic
+		context.beginPath();
+		context.fillStyle = 'black';
+		context.moveTo(0, 0);
+		context.arc(0, 0, 100, 0, 2 * Math.PI * this.animAmt);
+		context.fill();
+
+		context.scale(10, 10);
+		context.fillText(this.period * this.animAmt, 0, 0);
 	}
 
 }
