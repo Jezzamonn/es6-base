@@ -1,11 +1,14 @@
 #!/bin/bash
-# Generates a video using ffmpeg.
-# 
-# Will always overwrite any existing file.
+# Generates a video using ffmpeg
+#
+# Always overwrites any existing gif.
 
-set -ex
+temp_dir="/tmp/gif/"
+frame_pattern="${temp_dir}frame%004d.png"
+palette="/tmp/gif/palette.png"
 
-frame_pattern="/tmp/gif/frame%004d.png"
+# First clear the temp files. Don't care if they don't exist.
+rm -r "$temp_dir" 2> /dev/null
 
 # output the frames
 node build/gif-gen.bundle.js
