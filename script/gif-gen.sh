@@ -11,7 +11,7 @@ palette="/tmp/gif/palette.png"
 rm -r "$temp_dir" 2> /dev/null
 
 # output the frames
-node build/gif-gen.bundle.js
+node build/gif-gen.bundle.js --width=500 --height=500
 
 # Then bunch them together into a gif! (?)
 # Thanks Giphy Engineering!! https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/

@@ -25,15 +25,16 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "canvas": "^1.6.12",
+    "command-line-args": "^5.0.2",
     "http-server": "^0.11.1",
+    "mkdirp": "^0.5.1",
     "npm-watch": "^0.3.0",
     "reload": "^2.3.1",
-    "webpack": "^3.11.0",
-    "webpack-node-externals": "^1.7.2",
-    "canvas": "^1.6.12",
-    "mkdirp": "^0.5.1",
     "single-line-log": "^1.1.2",
-    "string-format": "^2.0.0"
+    "string-format": "^2.0.0",
+    "webpack": "^3.11.0",
+    "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {}
 }

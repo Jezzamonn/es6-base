@@ -11,6 +11,6 @@ palette="/tmp/gif/palette.png"
 rm -r "$temp_dir" 2> /dev/null
 
 # output the frames
-node build/gif-gen.bundle.js
+node build/gif-gen.bundle.js --width=1080 --height=1080
 
 ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y build/vid.mp4

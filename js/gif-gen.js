@@ -5,6 +5,7 @@ import singleLineLog from 'single-line-log';
 import format from 'string-format';
 import { join } from 'path';
 import mkdirp from 'mkdirp';
+import commandLineArgs from 'command-line-args'
 
 function renderFrame(context, controller, width, height) {
     context.resetTransform();
@@ -13,6 +14,10 @@ function renderFrame(context, controller, width, height) {
 
     // Set origin to middle.
     context.translate(width / 2, height / 2);
+
+    // min = show all (with borders), max = fit window (no boarders, but part will be cut off)
+    const minDimension = Math.min(width, height);
+    context.scale(minDimension / 500, minDimension / 500);
     
     controller.render(context);
 }
@@ -71,10 +76,19 @@ function generateFrames(controller, options, outDirectory) {
 }
 
 function main() {
+    const commandLineOptions = [
+        { name: 'width', type: parseInt},
+        { name: 'height', type: parseInt },
+    ]
+    const args = commandLineArgs(commandLineOptions);
+    if (!args.width || !args.height) {
+        throw new Error('width and height must be valid integers');
+    }
+
     const controller = new Controller();
     const options = {
-        width: 500,
-        height: 500,
+        width: args.width,
+        height: args.height,
         fps: 30,
         numSubFrames: 4,
         length: controller.period,
