@@ -4,6 +4,7 @@
 # Always overwrites any existing gif.
 
 temp_dir="/tmp/gif/"
+out_dir="promo/"
 frame_pattern="${temp_dir}frame%004d.png"
 palette="/tmp/gif/palette.png"
 
@@ -16,4 +17,4 @@ node build/gif-gen.bundle.js --width=500 --height=500
 # Then bunch them together into a gif! (?)
 # Thanks Giphy Engineering!! https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/
 ffmpeg -f image2 -i "$frame_pattern" -filter_complex "[0:v] palettegen" -y "$palette"
-ffmpeg -f image2 -i "$frame_pattern" -framerate 30 -i $palette -filter_complex "[0:v][1:v] paletteuse" -y build/out.gif
+ffmpeg -f image2 -i "$frame_pattern" -framerate 30 -i $palette -filter_complex "[0:v][1:v] paletteuse" -y "${out_dir}out.gif"

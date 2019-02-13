@@ -4,6 +4,7 @@
 # Always overwrites any existing gif.
 
 temp_dir="/tmp/gif/"
+out_dir="promo/"
 frame_pattern="${temp_dir}frame%004d.png"
 palette="/tmp/gif/palette.png"
 
@@ -13,4 +14,4 @@ rm -r "$temp_dir" 2> /dev/null
 # output the frames
 node build/gif-gen.bundle.js --width=1080 --height=1080
 
-ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y build/vid.mp4
+ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y "${out_dir}out.mp4"
