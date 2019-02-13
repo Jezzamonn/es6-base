@@ -29,10 +29,10 @@ const client = {
 }
 
 const gifExport = {
-    entry: './js/gif-gen.js',
+    entry: './js/save-frames.js',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'gif-gen.bundle.js'
+        filename: 'save-frames.bundle.js'
     },
     target: 'node',
     externals: [nodeExternals()]

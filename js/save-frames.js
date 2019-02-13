@@ -77,12 +77,16 @@ function generateFrames(controller, options, outDirectory) {
 
 function main() {
     const commandLineOptions = [
-        { name: 'width', type: parseInt},
+        { name: 'width', type: parseInt },
         { name: 'height', type: parseInt },
+        { name: 'out', type: String },
     ]
     const args = commandLineArgs(commandLineOptions);
     if (!args.width || !args.height) {
         throw new Error('width and height must be valid integers');
+    }
+    if (!args.out) {
+        throw new Error('pls specify an output directory (--out)');
     }
 
     const controller = new Controller();
@@ -94,7 +98,7 @@ function main() {
         length: controller.period,
     }
 
-    generateFrames(controller, options, '/tmp/gif');
+    generateFrames(controller, options, args.out);
 }
 
 main();
