@@ -16,7 +16,8 @@
     "gif": "script/gif-gen.sh",
     "watch-gif": "npm-watch gif",
     "video": "script/video-gen.sh",
-    "watch-video": "npm-watch video"
+    "watch-video": "npm-watch video",
+    "preview": "node build/save-frames.bundle.js --width=1200 --height=630 --single_frame --out=preview.png"
   },
   "author": "Jezzamon",
   "license": "ISC",

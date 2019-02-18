@@ -34,10 +34,10 @@ function averageImageDatas(imageDatas, outImageData) {
  * Outputs a bunch of frames as pngs to a directory.
  */
 function generateFrames(controller, options, outDirectory) {
-    const {width, height, fps, numSubFrames, length} = options;
+    const {width, height, fps, numSubFrames, length, startTime} = options;
     const canvas = new Canvas(width, height);
     const context = canvas.getContext('2d');
-    controller.update(0);
+    controller.update(startTime);
     
     const dt = (1 / fps);
     const subFrameTime = dt / numSubFrames;
@@ -75,30 +75,48 @@ function generateFrames(controller, options, outDirectory) {
     singleLineLog.stdout("Generating Done!\n")
 }
 
+function generateSingleFrame(controller, options, outFileName) {
+    const {width, height, startTime} = options;
+    const canvas = new Canvas(width, height);
+    const context = canvas.getContext('2d');
+    controller.update(startTime);
+
+    renderFrame(context, controller, width, height);
+    fs.writeFileSync(outFileName, canvas.toBuffer());
+}
+
 function main() {
     const commandLineOptions = [
         { name: 'width', type: parseInt },
         { name: 'height', type: parseInt },
         { name: 'out', type: String },
+        { name: 'start', type: parseFloat, defaultValue: 0 },
+        { name: 'single_frame', type: Boolean, defaultValue: false },
     ]
     const args = commandLineArgs(commandLineOptions);
-    if (!args.width || !args.height) {
+    if (!args['width'] || !args['height']) {
         throw new Error('width and height must be valid integers');
     }
-    if (!args.out) {
+    if (!args['out']) {
         throw new Error('pls specify an output directory (--out)');
     }
 
     const controller = new Controller();
     const options = {
-        width: args.width,
-        height: args.height,
+        width: args['width'],
+        height: args['height'],
         fps: 30,
         numSubFrames: 4,
         length: controller.period,
+        startTime: args['start'],
     }
 
-    generateFrames(controller, options, args.out);
+    if (args['single_frame']) {
+        generateSingleFrame(controller, options, args['out']);
+        return;
+    }
+
+    generateFrames(controller, options, args['out']);
 }
 
 main();
