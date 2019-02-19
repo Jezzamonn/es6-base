@@ -24,4 +24,4 @@ ffmpeg -f image2 -i "$frame_pattern" -filter_complex "[0:v] palettegen" -y "$pal
 ffmpeg -f image2 -i "$frame_pattern" -framerate 30 -i $palette -filter_complex "[0:v][1:v] paletteuse" -y "${out_filename}"
 
 # Optimise with gifsicle
-gifsicle --optimize --color=16 "${out_filename}" -o "${out_filename}"
+gifsicle --optimize --colors=16 "${out_filename}" -o "${out_filename}"
