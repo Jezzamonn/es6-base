@@ -1,6 +1,7 @@
-const mustache = require('mustache');
-const fs = require('fs');
 const commandLineArgs = require('command-line-args');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const mustache = require('mustache');
 
 function main() {
     const commandLineOptions = [
@@ -17,7 +18,8 @@ function main() {
     const view = args;
     const html = mustache.render(template, view);
 
-    fs.writeFileSync('build/index.html', html);
+    mkdirp('build/web/');
+    fs.writeFileSync('build/web/index.html', html);
 }
 
 function checkOptionProvided(args, name) {

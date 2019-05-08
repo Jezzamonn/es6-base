@@ -4,19 +4,32 @@
   "description": "",
   "main": "index.js",
   "watch": {
-    "webpack": "js/*.js",
-    "gif": "build/gif-gen.bundle.js",
-    "video": "build/opt.gif"
+    "webpack": "src/js/**",
+    "html": {
+      "patterns": [
+        "src/index.html",
+        "script/makehtml.js"
+      ],
+      "extensions": "html,js"
+    },
+    "css": {
+      "patterns": [
+        "src/css/**"
+      ],
+      "extensions": "css"
+    }
   },
   "scripts": {
     "start": "http-server",
+    "reload": "reload -b -d build/web",
+    "build": "npm-run-all --parallel webpack html css",
     "webpack": "webpack || exit 1",
-    "watch": "npm-watch webpack",
-    "reload": "reload -b -w build",
+    "html": "node script/makehtml.js --title='Duck Zone' --path=duck-zone",
+    "css": "cp -r src/css build/web/",
+    "clean": "rm -rf build/*",
+    "watch": "npm-watch",
     "gif": "script/gif-gen.sh",
-    "watch-gif": "npm-watch gif",
     "video": "script/video-gen.sh",
-    "watch-video": "npm-watch video",
     "preview": "node build/save-frames.bundle.js --width=1200 --height=630 --single_frame --out=preview.png"
   },
   "husky": {
@@ -37,6 +50,7 @@
     "husky": "^1.3.1",
     "mkdirp": "^0.5.1",
     "mustache": "^3.0.1",
+    "npm-run-all": "^4.1.5",
     "npm-watch": "^0.3.0",
     "reload": "^2.3.1",
     "single-line-log": "^1.1.2",
