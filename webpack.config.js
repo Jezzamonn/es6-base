@@ -31,7 +31,7 @@ const client = {
 const gifExport = {
     entry: './src/js/save-frames.js',
     output: {
-        path: path.resolve(__dirname, 'build/web/js'),
+        path: path.resolve(__dirname, 'build'),
         filename: 'save-frames.bundle.js'
     },
     target: 'node',
