@@ -5,11 +5,21 @@ export default class Controller {
 		this.period = 3;
 	}
 
+	/**
+	 * Simulate time passing.
+	 *
+	 * @param {number} dt Time since the last frame, in seconds 
+	 */
 	update(dt) {
 		this.animAmt += dt / this.period;
 		this.animAmt %= 1;
 	}
 
+	/**
+	 * Render the current state of the controller.
+	 *
+	 * @param {!CanvasRenderingContext2D} context
+	 */
 	render(context) {
 		context.beginPath();
 		context.fillStyle = 'black';

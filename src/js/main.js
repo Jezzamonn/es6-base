@@ -1,6 +1,7 @@
 import Controller from './controller.js';
 
 let canvas = document.getElementById('canvas');
+/** @type {!CanvasRenderingContext2D} */
 let context = canvas.getContext('2d');
 
 // Currently assuming square proportions.
