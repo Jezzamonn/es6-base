@@ -9,6 +9,7 @@ import commandLineArgs from 'command-line-args'
 
 function renderFrame(context, controller, width, height) {
     context.resetTransform();
+    context.globalAlpha = 1;
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
 

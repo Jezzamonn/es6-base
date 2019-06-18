@@ -38,6 +38,7 @@ function update() {
 function render() {
 	// Clear the previous frame
 	context.resetTransform();
+	context.globalAlpha = 1;
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
 	// Set origin to middle and scale canvas
