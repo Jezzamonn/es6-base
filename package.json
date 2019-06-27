@@ -24,7 +24,7 @@
     "reload": "reload -b -d build/web",
     "build": "npm-run-all --parallel webpack html css",
     "webpack": "webpack || exit 1",
-    "html": "node script/makehtml.js --title='Duck Zone' --path=duck-zone",
+    "html": "node script/makehtml.js --title='{{title}}' --path={{path}}",
     "css": "mkdir -p build/web/css/ && rsync -a --delete src/css/ build/web/css/",
     "clean": "rm -rf build/*",
     "watch": "npm-watch",

@@ -32,4 +32,14 @@ echo 'Updating remote repos'
 git remote rm origin
 git remote add upstream $basedir
 
+# Replace {{title}} and {{path}} in package.json
+echo 'Updating default title/path in package.json...'
+sed -i '' -e "s/{{title}}/$title/g" package.json
+sed -i '' -e "s/{{path}}/$pathname/g" package.json
+
+# Commit new change
+echo 'Committing changes...'
+git add .
+git commit -m 'Set default page title/path.'
+
 $scriptdir/git.sh "$pathname" "$title"
