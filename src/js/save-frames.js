@@ -36,7 +36,7 @@ function averageImageDatas(imageDatas, outImageData) {
  */
 function generateFrames(controller, options, outDirectory) {
     const {width, height, fps, numSubFrames, length, startTime} = options;
-    const canvas = new Canvas(width, height);
+    const canvas = Canvas.createCanvas(width, height);
     const context = canvas.getContext('2d');
     controller.update(startTime);
     
@@ -78,7 +78,7 @@ function generateFrames(controller, options, outDirectory) {
 
 function generateSingleFrame(controller, options, outFileName) {
     const {width, height, startTime} = options;
-    const canvas = new Canvas(width, height);
+    const canvas = Canvas.createCanvas(width, height);
     const context = canvas.getContext('2d');
     controller.update(startTime);
 
