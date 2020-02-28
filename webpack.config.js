@@ -4,7 +4,7 @@ const nodeExternals = require('webpack-node-externals');
 
 const common = {
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
@@ -17,6 +17,7 @@ const common = {
     stats: {
         colors: true
     },
+    mode: 'development'
 }
 
 const client = {
