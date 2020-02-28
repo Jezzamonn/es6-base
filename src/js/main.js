@@ -1,6 +1,7 @@
 import Controller from './controller.js';
 
 let canvas = document.getElementById('canvas');
+/** @type {!CanvasRenderingContext2D} */
 let context = canvas.getContext('2d');
 
 // Currently assuming square proportions.
@@ -38,6 +39,7 @@ function update() {
 function render() {
 	// Clear the previous frame
 	context.resetTransform();
+	context.globalAlpha = 1;
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
 	// Set origin to middle and scale canvas

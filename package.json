@@ -4,42 +4,59 @@
   "description": "",
   "main": "index.js",
   "watch": {
-    "webpack": "js/*.js",
-    "gif": "build/gif-gen.bundle.js",
-    "video": "build/opt.gif"
+    "webpack": "src/js/**",
+    "html": {
+      "patterns": [
+        "src/index.html",
+        "script/makehtml.js"
+      ],
+      "extensions": "html,js"
+    },
+    "css": {
+      "patterns": [
+        "src/css/**"
+      ],
+      "extensions": "css"
+    }
   },
   "scripts": {
     "start": "http-server",
+    "reload": "reload -b -d build/web",
+    "build": "npm-run-all --parallel webpack html css",
     "webpack": "webpack || exit 1",
-    "watch": "npm-watch webpack",
-    "reload": "reload -b -w build",
+    "html": "node script/makehtml.js --title='{{title}}' --path={{path}}",
+    "css": "mkdir -p build/web/css/ && rsync -a --delete src/css/ build/web/css/",
+    "clean": "rm -rf build/*",
+    "watch": "npm-watch",
     "gif": "script/gif-gen.sh",
-    "watch-gif": "npm-watch gif",
     "video": "script/video-gen.sh",
-    "watch-video": "npm-watch video"
+    "preview": "node build/save-frames.bundle.js --width=1200 --height=630 --single_frame --out=preview.png"
+  },
+  "husky": {
+    "hooks": {
+      "post-commit": "npm run gif >/dev/null 2>&1 & "
+    }
   },
   "author": "Jezzamon",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
+    "canvas": "^2.6.1",
+    "command-line-args": "^5.0.2",
     "http-server": "^0.11.1",
+    "husky": "^1.3.1",
+    "mkdirp": "^0.5.1",
+    "mustache": "^3.0.1",
+    "npm-run-all": "^4.1.5",
     "npm-watch": "^0.3.0",
     "reload": "^2.3.1",
+    "single-line-log": "^1.1.2",
+    "string-format": "^2.0.0",
     "webpack": "^3.11.0",
     "webpack-node-externals": "^1.7.2"
   },
-  "dependencies": {
-    "canvas": "^1.6.12",
-    "filesize": "^3.6.1",
-    "gif-encoder": "^0.7.1",
-    "gif.js.optimized": "^1.0.1",
-    "gifencoder": "^1.1.0",
-    "gifsicle": "^4.0.1",
-    "mkdirp": "^0.5.1",
-    "single-line-log": "^1.1.2",
-    "string-format": "^2.0.0"
-  }
+  "dependencies": {}
 }

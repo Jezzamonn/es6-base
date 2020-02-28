@@ -1,13 +1,21 @@
 #!/bin/bash
-# Generates a video using ffmpeg.
-# 
-# Will always overwrite any existing file.
+# Generates a video using ffmpeg
+#
+# Always overwrites any existing gif.
 
-set -ex
+temp_dir="/tmp/vid/"
+out_dir="promo/"
+frame_pattern="${temp_dir}frame%004d.png"
+palette="/tmp/gif/palette.png"
 
-frame_pattern="/tmp/gif/frame%004d.png"
+# Use the hash of the current commit as the name
+current_commit=`git rev-parse --short HEAD`
+out_filename="${out_dir}${current_commit}.mp4"
+
+# First clear the temp files. Don't care if they don't exist.
+rm -r "$temp_dir" 2> /dev/null
 
 # output the frames
-node build/gif-gen.bundle.js
+node build/save-frames.bundle.js --width=1080 --height=1080 --out="$temp_dir"
 
-ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y build/vid.mp4
+ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y "${out_filename}"

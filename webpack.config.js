@@ -20,19 +20,19 @@ const common = {
 }
 
 const client = {
-    entry: './js/main.js',
+    entry: './src/js/main.js',
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'build/web/js'),
         filename: 'main.bundle.js'
     },
     devtool: 'source-map'
 }
 
 const gifExport = {
-    entry: './js/gif-gen.js',
+    entry: './src/js/save-frames.js',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'gif-gen.bundle.js'
+        filename: 'save-frames.bundle.js'
     },
     target: 'node',
     externals: [nodeExternals()]
