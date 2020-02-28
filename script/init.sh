@@ -42,4 +42,7 @@ echo 'Committing changes...'
 git add .
 git commit -m 'Set default page title/path.'
 
+# Reinstall stuff, so the husky commit hooks get added.
+npm rebuild
+
 $scriptdir/git.sh "$pathname" "$title"
