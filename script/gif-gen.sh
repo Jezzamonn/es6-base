@@ -3,7 +3,8 @@
 #
 # Always overwrites any existing gif.
 
-temp_dir="/tmp/gif/"
+rand_id=$(uuidgen)
+temp_dir="/tmp/gif/$rand_id/"
 out_dir="promo/"
 frame_pattern="${temp_dir}frame%004d.png"
 palette="/tmp/gif/palette.png"
