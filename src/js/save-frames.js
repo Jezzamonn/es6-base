@@ -5,6 +5,7 @@ import singleLineLog from 'single-line-log';
 import { join } from 'path';
 import mkdirp from 'mkdirp';
 import commandLineArgs from 'command-line-args'
+import prettyMilliseconds from 'pretty-ms';
 
 function renderFrame(context, controller, width, height) {
     context.resetTransform();
@@ -60,12 +61,16 @@ function generateFrames(controller, options, outDirectory) {
             const doneAmt = (time + i * subFrameTime) / length;
             const doneAmtString = doneAmt.toLocaleString('en', {style: 'percent'});
             const currentTime = Date.now();
-            const timePassedSeconds = (currentTime - startTime) / 1000;
-            const estimatedTotalSeconds = ((currentTime - startTime) / doneAmt) / 1000;
+            const timePassed = currentTime - startTime;
+            let estimatedTime = '';
+            if (doneAmt > 0.0001) {
+                const estimatedTotal = (currentTime - startTime) / doneAmt;
+                estimatedTime = `Estimated total time: ${prettyMilliseconds(estimatedTotal)}`;
+            }
 
             singleLineLog.stdout(
                 `Generating frames: ${doneAmtString} (${frameNumber}.${i} / ${totalFrames}). ` +
-                `Elapsed: ${timePassedSeconds.toFixed(0)} seconds. Estimated total time: ${estimatedTotalSeconds.toFixed(0)} seconds`,
+                `Elapsed: ${prettyMilliseconds(timePassed)}. ${estimatedTime}`,
             );
         }
     
@@ -82,8 +87,8 @@ function generateFrames(controller, options, outDirectory) {
     }
     
     const finishTime = Date.now();
-    const totalSeconds = (finishTime - startTime) / 1000;
-    singleLineLog.stdout(`Generating Done! Total time: ${totalSeconds.toFixed(0)}\n`);
+    const totalSeconds = finishTime - startTime;
+    singleLineLog.stdout(`Generating Done! Total time: ${prettyMilliseconds(totalSeconds)}\n`);
 }
 
 function generateSingleFrame(controller, options, outFileName) {
