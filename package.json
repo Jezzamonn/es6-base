@@ -54,7 +54,6 @@
     "npm-watch": "^0.3.0",
     "reload": "^2.4.0",
     "single-line-log": "^1.1.2",
-    "string-format": "^2.0.0",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2"
