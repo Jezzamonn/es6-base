@@ -34,15 +34,18 @@ function averageImageDatas(imageDatas, outImageData) {
  * Outputs a bunch of frames as pngs to a directory.
  */
 function generateFrames(controller, options, outDirectory) {
-    const {width, height, fps, numSubFrames, length, startTime} = options;
+    const {width, height, fps, numSubFrames, length} = options;
+    const skipTime = options.startTime;
     const canvas = Canvas.createCanvas(width, height);
     const context = canvas.getContext('2d');
-    controller.update(startTime);
+    controller.update(skipTime);
     
     const dt = (1 / fps);
     const subFrameTime = dt / numSubFrames;
 
     mkdirp(outDirectory);
+
+    const startTime = Date.now();
     
     let frameNumber = 0;
     let totalFrames = Math.ceil(length / dt);
@@ -56,8 +59,13 @@ function generateFrames(controller, options, outDirectory) {
 
             const doneAmt = (time + i * subFrameTime) / length;
             const doneAmtString = doneAmt.toLocaleString('en', {style: 'percent'});
+            const currentTime = Date.now();
+            const timePassedSeconds = (currentTime - startTime) / 1000;
+            const estimatedTotalSeconds = ((currentTime - startTime) / doneAmt) / 1000;
+
             singleLineLog.stdout(
-                `Generating frames: ${doneAmtString} (${frameNumber}.${i} / ${totalFrames})`,
+                `Generating frames: ${doneAmtString} (${frameNumber}.${i} / ${totalFrames}). ` +
+                `Elapsed: ${timePassedSeconds.toFixed(0)} seconds. Estimated total time: ${estimatedTotalSeconds.toFixed(0)} seconds`,
             );
         }
     
@@ -73,7 +81,9 @@ function generateFrames(controller, options, outDirectory) {
         frameNumber ++;
     }
     
-    singleLineLog.stdout("Generating Done!\n")
+    const finishTime = Date.now();
+    const totalSeconds = (finishTime - startTime) / 1000;
+    singleLineLog.stdout(`Generating Done! Total time: ${totalSeconds.toFixed(0)}\n`);
 }
 
 function generateSingleFrame(controller, options, outFileName) {
