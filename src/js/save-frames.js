@@ -2,7 +2,6 @@ import Controller from './controller.js';
 import Canvas from 'canvas';
 import fs from 'fs';
 import singleLineLog from 'single-line-log';
-import format from 'string-format';
 import { join } from 'path';
 import mkdirp from 'mkdirp';
 import commandLineArgs from 'command-line-args'
@@ -46,6 +45,7 @@ function generateFrames(controller, options, outDirectory) {
     mkdirp(outDirectory);
     
     let frameNumber = 0;
+    let totalFrames = Math.ceil(length / dt);
     for (let time = 0; time < length; time += dt) {
         const subframes = [];
         for (let i = 0; i < numSubFrames; i ++) {
@@ -53,6 +53,12 @@ function generateFrames(controller, options, outDirectory) {
             subframes.push(context.getImageData(0, 0, width, height));
     
             controller.update(subFrameTime);
+
+            const doneAmt = (time + i * subFrameTime) / length;
+            const doneAmtString = doneAmt.toLocaleString('en', {style: 'percent'});
+            singleLineLog.stdout(
+                `Generating frames: ${doneAmtString} (${frameNumber}.${i} / ${totalFrames})`,
+            );
         }
     
         const averagedFrame = averageImageDatas(subframes, context.createImageData(width, height));
@@ -63,12 +69,6 @@ function generateFrames(controller, options, outDirectory) {
         const filePath = join(outDirectory, fileName);
 
         fs.writeFileSync(filePath, canvas.toBuffer());
-    
-        const doneAmt = time / length;
-        singleLineLog.stdout(format(
-            "Generating frames: {}",
-            doneAmt.toLocaleString('en', {style: 'percent'})
-        ));
 
         frameNumber ++;
     }
