@@ -43,7 +43,7 @@ function generateFrames(controller, options, outDirectory) {
     const dt = (1 / fps);
     const subFrameTime = dt / numSubFrames;
 
-    mkdirp(outDirectory);
+    mkdirp.sync(outDirectory);
 
     const startTime = Date.now();
     
