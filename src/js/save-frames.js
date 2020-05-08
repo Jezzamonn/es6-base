@@ -108,6 +108,7 @@ function main() {
         { name: 'out', type: String },
         { name: 'start', type: parseFloat, defaultValue: 0 },
         { name: 'single_frame', type: Boolean, defaultValue: false },
+        { name: 'sub_frames', type: parseInt, defaultValue: 4 },
     ]
     const args = commandLineArgs(commandLineOptions);
     if (!args['width'] || !args['height']) {
@@ -122,7 +123,7 @@ function main() {
         width: args['width'],
         height: args['height'],
         fps: 30,
-        numSubFrames: 4,
+        numSubFrames: args['sub_frames'],
         length: controller.period,
         startTime: args['start'],
     }
