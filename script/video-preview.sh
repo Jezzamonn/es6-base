@@ -19,4 +19,5 @@ rm -r "$temp_dir" 2> /dev/null
 # output the frames
 node build/save-frames.bundle.js --width=500 --height=500 --sub_frames=1 --out="$temp_dir"
 
-ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y "${out_filename}"
+# Convert frames to video. Output error to stdout because... it's noisy?
+ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y "${out_filename}" 2>&1
