@@ -17,7 +17,7 @@ out_filename="${out_dir}${current_commit}.mp4"
 rm -r "$temp_dir" 2> /dev/null
 
 # output the frames
-node build/save-frames.bundle.js --width=500 --height=500 --sub_frames=1 --out="$temp_dir"
+node build/save-frames.bundle.js --width=500 --height=500 --fps=30 --sub_frames=1 --out="$temp_dir"
 
 # Convert frames to video. Output error to stdout because... it's noisy?
-ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y "${out_filename}" 2>&1
+ffmpeg -f image2 -framerate 30 -i "$frame_pattern" -pix_fmt yuv420p -y "${out_filename}" 2>&1
