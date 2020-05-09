@@ -106,6 +106,7 @@ function main() {
         { name: 'width', type: parseInt },
         { name: 'height', type: parseInt },
         { name: 'out', type: String },
+        { name: 'fps', type: parseInt, defaultValue: 30 },
         { name: 'start', type: parseFloat, defaultValue: 0 },
         { name: 'single_frame', type: Boolean, defaultValue: false },
         { name: 'sub_frames', type: parseInt, defaultValue: 4 },
@@ -122,7 +123,7 @@ function main() {
     const options = {
         width: args['width'],
         height: args['height'],
-        fps: 30,
+        fps: args['fps'],
         numSubFrames: args['sub_frames'],
         length: controller.period,
         startTime: args['start'],

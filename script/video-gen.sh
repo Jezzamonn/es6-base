@@ -17,6 +17,6 @@ out_filename="${out_dir}export_${current_commit}.mp4"
 rm -r "$temp_dir" 2> /dev/null
 
 # output the frames
-node build/save-frames.bundle.js --width=1080 --height=1080 --out="$temp_dir"
+node build/save-frames.bundle.js --width=1080 --height=1080 --fps=60 --out="$temp_dir"
 
-ffmpeg -f image2 -i "$frame_pattern" -pix_fmt yuv420p -y "${out_filename}"
+ffmpeg -f image2 -framerate 60 -i "$frame_pattern" -pix_fmt yuv420p -y "${out_filename}"
