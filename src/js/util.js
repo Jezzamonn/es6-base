@@ -4,11 +4,11 @@ export function easeInOut(t, amt=2) {
 }
 
 export function sinEaseInOut(t) {
-	return 0.5 - 0.5 * Math.cos(Math.PI * t);
+    return 0.5 - 0.5 * Math.cos(Math.PI * t);
 }
 
 export function loop(t) {
-	return 0.5 - 0.5 * Math.cos(Math.PI * 2 * t);
+    return 0.5 - 0.5 * Math.cos(Math.PI * 2 * t);
 }
 
 export function slurp(val1, val2, amt) {
@@ -66,13 +66,13 @@ export function divideInterval(t, min, max) {
 }
 
 export function rgb(r, g, b) {
-	return 'rgb('+r+','+g+','+b+')';
+    return 'rgb('+r+','+g+','+b+')';
 }
 
 export function gray(whiteAmt) {
     whiteAmt = clamp(whiteAmt, 0, 1);
-	const whiteRgb = Math.floor(255 * whiteAmt);
-	return rgb(whiteRgb, whiteRgb, whiteRgb);
+    const whiteRgb = Math.floor(255 * whiteAmt);
+    return rgb(whiteRgb, whiteRgb, whiteRgb);
 }
 
 // Pseudo-random number generator functions
