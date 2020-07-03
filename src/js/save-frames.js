@@ -65,7 +65,7 @@ function generateFrames(controller, options, outDirectory) {
             let estimatedTime = '';
             if (doneAmt > 0.0001) {
                 const estimatedTotal = (currentTime - startTime) / doneAmt;
-                estimatedTime = `Estimated total time: ${prettyMilliseconds(estimatedTotal)}`;
+                estimatedTime = `Est. total time: ${prettyMilliseconds(estimatedTotal)}`;
             }
 
             singleLineLog.stdout(
