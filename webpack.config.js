@@ -7,10 +7,8 @@ const common = {
         rules: [
             {
                 test: /\.js$/,
+                exclude: /node_modules/,
                 loader: 'babel-loader',
-                query: {
-                    presets: ['env']
-                }
             }
         ]
     },
