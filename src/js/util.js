@@ -65,6 +65,35 @@ export function divideInterval(t, min, max) {
     return (t - min) / (max - min);
 }
 
+/**
+ * Extracts a 0-1 interval from a section of a 0-1 interval
+ *
+ * For example, if min == 0.3 and max == 0.7, you get:
+ *
+ *           0.3  0.7
+ *     t: 0 --+----+-- 1
+ *           /      \
+ *          /        \
+ *         /          \
+ *     -> 0 ---------- 1
+ *
+ * Useful for making sub animations.
+ *
+ * Doesn't do any clamping, so you might want to clamp yourself.
+ *
+ * Equivalent to divideInterval, I just prefer this name.
+ */
+export function splitInternal(t, min, max) {
+    divideInterval(t, min, max);
+}
+
+/**
+ * Like splitInterval, but with clamping.
+ */
+export function clampedSplitInternal(t, min, max) {
+    return clamp(splitInternal(t, min, max), 0, 1);
+}
+
 export function rgb(r, g, b) {
     return 'rgb('+r+','+g+','+b+')';
 }
