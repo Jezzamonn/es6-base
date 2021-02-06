@@ -128,7 +128,6 @@ function mulberry32(a) {
 }
 
 /**
- * 
  * @param {string} seed What ya seed it with.
  * @returns {function():number} A wonderful seeded random number generator.
  */
