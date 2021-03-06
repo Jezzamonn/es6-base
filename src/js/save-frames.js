@@ -19,7 +19,7 @@ function renderFrame(context, controller, width, height) {
     // min = show all (with borders), max = fit window (no boarders, but part will be cut off)
     const minDimension = Math.min(width, height);
     context.scale(minDimension / 500, minDimension / 500);
-    
+
     controller.render(context);
 }
 
@@ -40,14 +40,14 @@ function generateFrames(controller, options, outDirectory) {
     const canvas = Canvas.createCanvas(width, height);
     const context = canvas.getContext('2d');
     controller.update(skipTime);
-    
+
     const dt = (1 / fps);
     const subFrameTime = dt / numSubFrames;
 
     mkdirp.sync(outDirectory);
 
     const startTime = Date.now();
-    
+
     let frameNumber = 0;
     let totalFrames = Math.ceil(length / dt);
     for (let time = 0; time < length; time += dt) {
@@ -55,7 +55,7 @@ function generateFrames(controller, options, outDirectory) {
         for (let i = 0; i < numSubFrames; i ++) {
             renderFrame(context, controller, width, height);
             subframes.push(context.getImageData(0, 0, width, height));
-    
+
             controller.update(subFrameTime);
 
             const doneAmt = (time + i * subFrameTime) / length;
@@ -73,7 +73,7 @@ function generateFrames(controller, options, outDirectory) {
                 `Elapsed: ${prettyMilliseconds(timePassed)}. ${estimatedTime}`,
             );
         }
-    
+
         const averagedFrame = averageImageDatas(subframes, context.createImageData(width, height));
         context.putImageData(averagedFrame, 0, 0);
 

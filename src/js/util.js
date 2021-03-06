@@ -64,31 +64,12 @@ export function clamp(amt, val1, val2) {
  *
  * Doesn't do any clamping, so you might want to clamp yourself.
  */
-export function divideInterval(t, min, max) {
+export function splitInternal(t, min, max) {
     return (t - min) / (max - min);
 }
 
-/**
- * Extracts a 0-1 interval from a section of a 0-1 interval
- *
- * For example, if min == 0.3 and max == 0.7, you get:
- *
- *           0.3  0.7
- *     t: 0 --+----+-- 1
- *           /      \
- *          /        \
- *         /          \
- *     -> 0 ---------- 1
- *
- * Useful for making sub animations.
- *
- * Doesn't do any clamping, so you might want to clamp yourself.
- *
- * Equivalent to divideInterval, I just prefer this name.
- */
-export function splitInternal(t, min, max) {
-    divideInterval(t, min, max);
-}
+// Alias for older projects
+export const divideInterval = splitInternal;
 
 /**
  * Like splitInterval, but with clamping.
