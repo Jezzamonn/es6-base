@@ -8,7 +8,7 @@ export default class Controller {
     /**
      * Simulate time passing.
      *
-     * @param {number} dt Time since the last frame, in seconds 
+     * @param {number} dt Time since the last frame, in seconds.
      */
     update(dt) {
         this.animAmt += dt / this.period;
