@@ -12,6 +12,11 @@ pathname=$2
 scriptdir="$( cd "$(dirname "$0")" ; pwd -P )"
 basedir=$(dirname "$scriptdir")
 
+if [ -e $pathname ]; then
+    echo "$pathname already exists"
+    exit 1
+fi
+
 # Clone
 git clone -b jez $basedir $pathname || exit 1
 
