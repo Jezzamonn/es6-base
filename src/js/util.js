@@ -49,6 +49,8 @@ export function clamp(amt, val1, val2) {
 }
 
 /**
+ * Inverse of lerp.
+ *
  * Extracts a 0-1 interval from a section of a 0-1 interval
  *
  * For example, if min == 0.3 and max == 0.7, you get:
@@ -64,9 +66,11 @@ export function clamp(amt, val1, val2) {
  *
  * Doesn't do any clamping, so you might want to clamp yourself.
  */
-export function splitInternal(t, min, max) {
+export function invLerp(t, min, max) {
     return (t - min) / (max - min);
 }
+
+export const splitInternal = invLerp;
 
 // Alias for older projects
 export const divideInterval = splitInternal;
