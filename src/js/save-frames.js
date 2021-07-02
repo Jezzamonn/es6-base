@@ -85,7 +85,7 @@ function generateFrames(controller, options, outDirectory) {
 
         frameNumber ++;
     }
-    
+
     const finishTime = Date.now();
     const totalSeconds = finishTime - startTime;
     singleLineLog.stdout(`Generating Done! Total time: ${prettyMilliseconds(totalSeconds)}\n`);
