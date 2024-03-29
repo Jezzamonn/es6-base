@@ -1,6 +1,6 @@
 const commandLineArgs = require('command-line-args');
 const fs = require('fs');
-const mkdirp = require('mkdirp');
+const { mkdirp } = require('mkdirp');
 const mustache = require('mustache');
 
 function main() {

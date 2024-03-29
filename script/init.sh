@@ -29,9 +29,9 @@ cp -R $basedir/node_modules .
 
 # TODO: init husky
 
-# Make this branch be called master
+# Make this branch be called main
 echo 'Renaming branch'
-git branch -m master
+git branch -m main
 
 echo 'Updating remote repos'
 git remote rm origin
